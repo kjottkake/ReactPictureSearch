@@ -7,9 +7,10 @@ const config = require('./config.json');
 
 
 class App extends React.Component {
+    state = { images: [] };
 
 
-    async onSearchSubmit(term){
+    onSearchSubmit = async (term) =>{
         // console.log(term);
         const response = await axios.get('https://api.unsplash.com/search/photos', {
             params: { query: term},
@@ -21,7 +22,8 @@ class App extends React.Component {
         //     console.log(response.data.results);
         // });
 
-        console.log(response.data.results);
+        // console.log(response.data.results);
+        this.setState({ images: response.data.results});
     }
 
 
@@ -30,6 +32,7 @@ class App extends React.Component {
         return (
             <div className="ui container" style={{marginTop: '15px'}}>
                 <SearchBar onSubmit={this.onSearchSubmit}/>
+                Found: {this.state.images.length} images
             </div>
         );
     }
